@@ -1,0 +1,9 @@
+# cmdfile contains lines of commands, each line runs in a rank (or core, or PE)
+# Uncomment this line to trigger an error exit from rank_run
+echo "I am #1" > 0.txt
+echo "I am #1" > 1.txt
+echo "I am #2" > 2.txt
+echo "I am #3" > 3.txt
+echo "I am #4" > 4.txt
+echo "I am #5" > 5.txt
+echo "I am #6" > 6.txt

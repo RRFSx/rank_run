@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH -o log.test
+#SBATCH --job-name=rank_run
+#SBATCH --account=arfs-gsl
+#SBATCH --qos=normal
+#SBATCH --partition=batch
+#SBATCH --cluster=c6
+#SBATCH -t 0:10:00
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=12
+
+srun ./rank_run.x cmdfile
+srun ./rank_run.x 'scripts/script_*.sh'
+
+echo -e "err number=$?\n"
