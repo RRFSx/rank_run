@@ -54,3 +54,7 @@ dkms.conf
 # debug information files
 *.dwo
 build
+tests/*.txt
+tests/log.test
+tests/out.script_*
+tests/rank_run.x
