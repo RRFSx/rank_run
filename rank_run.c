@@ -37,6 +37,15 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
+    if (size > MAX_RANKS) {
+        if (rank == 0) {
+            fprintf(stderr, "MPI rank count %d exceeds the maximum of %d\n",
+                    size, MAX_RANKS);
+        }
+        MPI_Abort(MPI_COMM_WORLD, 1);
+        return 1;
+    }
+
     if (argc != 2) {
         if (rank==0) fprintf(stderr, "Usage: %s <cmdfile | script_pattern>\n", argv[0]);
         MPI_Finalize();
@@ -80,7 +89,7 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "file not found: '%s'\n", arg);
                 MPI_Abort(MPI_COMM_WORLD, 1);
             }
-            while (fgets(commands[num_commands], MAX_LINE, fp) && num_commands < MAX_RANKS) {
+            while (num_commands < MAX_RANKS && fgets(commands[num_commands], MAX_LINE, fp)) {
                 trim(commands[num_commands]);
                 if (commands[num_commands][0] != '\0' && commands[num_commands][0] != '#')
                     num_commands++;
